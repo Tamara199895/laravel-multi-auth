@@ -4,6 +4,7 @@ namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
 use App\Models\Customer;
+use App\Models\Freelancer;
 use Laravel\Sanctum\HasApiTokens;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Database\Eloquent\Casts\Attribute;
@@ -55,6 +56,26 @@ class User extends Authenticatable
 
     public function customer()
     {
-        return $this->hasOne(Customer::class);
+        return $this->hasOne(Customer::class,$foreignKey = 'customer_id',$localKey = 'id');
     }
+    public function freelancer()
+    {
+        return $this->hasOne(Freelancer::class,$foreignKey = 'freelancer_id',$localKey = 'id');
+    }
+
+//     public static function boot(){
+//         parent::boot(); 
+
+//          static::created(function ($user)) {
+//             if ($user->type == 0){
+//              Customer::create([
+//                 'customer_id' => $user->id
+//             ]);
+//             }else{
+//              Freelancer::create([
+//                 'freelancer_id' => $user->id
+//             ]);
+//              } 
+//         }; 
+// }
 }

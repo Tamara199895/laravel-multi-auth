@@ -76,11 +76,37 @@ class JobsController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit($job_id, $customer_id, $freelancer_id)
+    public function edit($id)
     {
-        $job = Jobs::find($job_id);
-        return view('jobs.rate')->with(['job_id'=>$job_id,'customer_id'=>$customer_id, 'freelancer_id'=> $freelancer_id]);
+        //   
     }
+
+    public function rate($job_id, $customer_id, $freelancer_id)
+    {
+        return view('jobs.rate')->with(['job_id'=>$job_id, 'customer_id'=> $customer_id, 'freelancer_id'=> $freelancer_id]);
+    }
+
+    public function releaseProject($id){
+        $job = Jobs::find($id);
+        if($job->freelancer_id && $job->status== 'started' ){
+            $job->update(['status' => 'completed']);
+            // dd($job->status);
+        }
+        return redirect()->back();
+    }
+
+    public function approve($job_id,$customer_id,$freelancer_id)
+    {
+        Jobs::where('id', $job_id)
+        ->update(['freelancer_id' => $freelancer_id,
+                 'status'=> 'started']
+                );
+        Customer_Freelancer::where('job_id',$job_id)->delete();
+        // dd($requests);
+        $job = $this->JobsRepository->find($customer_id);
+        return view('jobs.show')->with('job', $job);
+    }
+
 
     /**
      * Update the specified resource in storage.

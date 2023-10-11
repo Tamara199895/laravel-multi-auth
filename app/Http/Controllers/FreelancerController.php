@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Jobs;
 use App\Models\Freelancer;
 use Illuminate\Http\Request;
 
@@ -34,9 +35,10 @@ class FreelancerController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Freelancer $freelancer)
+    public function show($id)
     {
-        //
+        $jobs = Jobs::where('freelancer_id',$id)->get();
+        return view('freelancer_jobs')->with('jobs',$jobs);
     }
 
     /**

@@ -7,6 +7,9 @@
             <div class="card">
                 <div class="card-header">{{ __('Login') }}</div>
 
+                @if(session()->has('error'))
+                <label class="alert alert-danger w-100">{{session('error')}}</label>
+                @endif
                 <div class="card-body">
                     <form method="POST" action="{{ route('login') }}">
                         @csrf

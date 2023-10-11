@@ -6,11 +6,15 @@
             <div class="card">
                 <div class="card-header">Dashboard</div>
                 <div class="card-body">
-                    @if(auth()->user()->is_admin == 1)
-                        <a href="{{url('freelancer/routes')}}">Freelancer</a>
+                    @if(auth()->user()->type == 'freelancer')
+                    <p>Congratulations yor registered as a Freelancer. See your 
+                        <a href="{{route('freelancer.home')}}">Page</a> here
+                        </p>
                     @else
                         <div class="panel-heading">
-                           Customer
+                        <p>Congratulations yor registered as a Customer. See your 
+                        <a href="{{route('customer.home')}}">page</a> here
+                            
                         </div>
                     @endif
                         </div>

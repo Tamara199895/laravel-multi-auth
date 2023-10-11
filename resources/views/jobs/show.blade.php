@@ -30,7 +30,7 @@ use App\Models\User;
                   {{User::where('id', $job->freelancer_id)->first()->name}}
                   @endif
                   @if(!$job->freelancer_id)
-                  <a href="{{route('customer.show_customer_request', $job->id)}}">See requests</a>
+                  <a href="{{route('customer.show_customer_request', [$job->id,$job->customer_id])}}">See requests</a>
                   @endif
                 </td>
                <td> <p style="padding-left:20px;padding-right:30px">{{ $job->status }}</p></td>
@@ -39,17 +39,10 @@ use App\Models\User;
                 <p>This job is running by - {{User::where('id', $job->freelancer_id)->first()->name}}</p>
                 @endif
                 @if($job->status == 'completed'&& !$job->rate && !$job->rate_description)
-                <a href="{{route('jobs.edit', [$job->id, $job->customer_id, $job->freelancer_id])}}">Please rate to {{User::where('id', $job->freelancer_id)->first()->name}}</a>
+                <a href="{{route('jobs.rate', [$job->id, $job->customer_id, $job->freelancer_id])}}">Please rate to {{User::where('id', $job->freelancer_id)->first()->name}}</a>
                 @endif
                 @if($job->status == 'completed'&& $job->rate && $job->rate_description)
                <p>{{User::where('id', $job->freelancer_id)->first()->name}} done this job</p>
-                @endif
-                @if($job->status == 'not_started')
-                <form action="{{ route('jobs.destroy', $job->id) }}" method="POST">
-                <input type="hidden" name="_method" value="DELETE">
-                <input type="hidden" name="_token" value="{{ csrf_token() }}">
-                <input type="submit" class="btn btn-xs btn-danger" value="Delete">
-                </form>
                 @endif
                 </td>
 
