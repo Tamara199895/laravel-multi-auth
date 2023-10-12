@@ -1,9 +1,6 @@
 @extends('layouts.app')
 @section('content')
-<?php
-use App\Models\Jobs;
-use App\Models\User;
-?>
+
 <div class="container">
     <div class="row justify-content-center">
         <div class="col-md-16">
@@ -13,9 +10,9 @@ use App\Models\User;
                 @if($jobRequests)
                     @foreach($jobRequests as $jobRequest)
                     <div style="">
-                        <p>Work name -{{Jobs::where('id', $jobRequest['job_id'])->first()->work_name}}</p>
-                        <p>Freelancer name -{{User::find($jobRequest['freelancer_id'])->first()->name}}</p>
-                        <a href="{{route('jobs.approve', [ $jobRequest['job_id'], $jobRequest['customer_id'], $jobRequest['freelancer_id'] ])}}">Aprove</a>
+                        <p>Work name -</p>
+                        <p>Freelancer name -</p>
+                        <a href="{{route('jobs.approve', [ $jobRequest['job_id'] ])}}">Aprove</a>
                     </div>
                     @endforeach
                 @endif

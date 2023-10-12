@@ -2,17 +2,18 @@
 
 namespace Database\Seeders;
 
-use App\Models\Customer;
+use App\Models\Jobs;
+use App\Models\Skills;
 use Illuminate\Database\Seeder;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 
-class CustomerSeeder extends Seeder
+class JobsSeeder extends Seeder
 {
     /**
      * Run the database seeds.
      */
     public function run(): void
     {
-        Customer::factory()->count(8)->create();
+        Jobs::factory()->has(Skills::factory())->count(5)->create();  
     }
 }

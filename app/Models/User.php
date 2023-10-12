@@ -63,19 +63,4 @@ class User extends Authenticatable
         return $this->hasOne(Freelancer::class,$foreignKey = 'freelancer_id',$localKey = 'id');
     }
 
-//     public static function boot(){
-//         parent::boot(); 
-
-//          static::created(function ($user)) {
-//             if ($user->type == 0){
-//              Customer::create([
-//                 'customer_id' => $user->id
-//             ]);
-//             }else{
-//              Freelancer::create([
-//                 'freelancer_id' => $user->id
-//             ]);
-//              } 
-//         }; 
-// }
 }

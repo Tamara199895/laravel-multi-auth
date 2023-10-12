@@ -46,9 +46,7 @@ class RegisterController extends Controller
     
     protected function validator(array $data)
     {
-        // dd($data);
         return Validator::make($data,(new UserStoreRequest)->rules());
-        // return $data->validated();
     }
 
     /**
@@ -63,11 +61,9 @@ class RegisterController extends Controller
         $data['password'] = Hash::make($data['password']);
         
         $user =  User::create($data);
-        // return $user;
-        // dd($user->type);
-        
+      
         if ($user->type == 'customer'){
-            $user->customer()->create(['customer_id' => $user->id]);
+            Customer::create(['customer_id' => $user->id]);
 
         }else{
              Freelancer::create([

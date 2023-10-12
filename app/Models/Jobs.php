@@ -2,8 +2,9 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
+use App\Models\Skills;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Jobs extends Model
 {
@@ -18,4 +19,14 @@ class Jobs extends Model
         'status',
         'rate'
     ];
+
+    public function customer()
+    {
+        return $this->belongsTo(Customer::class);
+    }
+    public function skills() {
+        return $this->belongsToMany(Skills::class, 'job_skills', 'skill_id', 'job_id');
+
+
+    }    
 }

@@ -13,15 +13,15 @@ return new class extends Migration
     {
         Schema::create('jobs', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('customer_id')->nullable();
+            $table->unsignedBigInteger('customer_id');
             $table->unsignedBigInteger('freelancer_id')->nullable();
             $table->foreign('customer_id')->references('customer_id')->on('customer');
             $table->foreign('freelancer_id')->references('freelancer_id')->on('freelancer');
             $table->string('work_name');
             $table->string('work_description');
             $table->string('status');
-            $table->string('rate_description');
-            $table->string('rate');
+            $table->string('rate_description')->nullable();
+            $table->string('rate')->nullable();
             $table->timestamps();
         });
     }

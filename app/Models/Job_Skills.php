@@ -3,27 +3,27 @@
 namespace App\Models;
 
 use App\Models\Jobs;
-use App\Models\Freelancer;
+use App\Models\Skills;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
-class Customer_Freelancer extends Model
+class Job_Skills extends Model
 {
     use HasFactory;
-    protected $table = 'customer_freelancer';
+    protected $table = 'job_skills';
 
     protected $fillable = [
-        'freelancer_id',
+        'skill_id',
         'job_id',
-        'signed'
     ];
+
 
     public function job()
     {
         return $this->belongsTo(Jobs::class);
     }
-    public function freelancer()
+    public function skill()
     {
-        return $this->belongsTo(Freelancer::class);
+        return $this->belongsTo(Skills::class);
     }
 }

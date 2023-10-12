@@ -12,10 +12,8 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('customer_freelancer', function (Blueprint $table) {
-            $table->unsignedBigInteger('customer_id');
             $table->unsignedBigInteger('freelancer_id');
             $table->unsignedBigInteger('job_id');
-            $table->foreign('customer_id')->references('customer_id')->on('customer');
             $table->foreign('freelancer_id')->references('freelancer_id')->on('freelancer');
             $table->foreign('job_id')->references('id')->on('jobs');
             $table->boolean('signed')->default(false);

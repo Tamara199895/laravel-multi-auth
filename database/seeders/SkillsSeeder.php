@@ -2,18 +2,17 @@
 
 namespace Database\Seeders;
 
-use App\Models\User;
+use App\Models\Skills;
 use Illuminate\Database\Seeder;
-use Illuminate\Support\Facades\Hash;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 
-class UsersSeeder extends Seeder
+class SkillsSeeder extends Seeder
 {
     /**
      * Run the database seeds.
      */
-    public function run()
+    public function run(): void
     {
-        User::factory()->count(5)->create();
+        Skills::factory()->count(8)->create();  
     }
 }

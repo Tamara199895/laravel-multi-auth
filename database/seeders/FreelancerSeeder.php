@@ -13,7 +13,7 @@ class FreelancerSeeder extends Seeder
      */
     public function run(): void
     {
-        Freelancer::factory()->count(5)->create();
+        Freelancer::factory()->count(8)->create();
 
     }
 }
