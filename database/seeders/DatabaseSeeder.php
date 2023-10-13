@@ -16,7 +16,7 @@ class DatabaseSeeder extends Seeder
             UserTableSeeder::class,
             FreelancerSeeder::class,
             CustomerSeeder::class,
-            // SkillsSeeder::class,
+            SkillsSeeder::class,
             JobsSeeder::class,
         ]);
         // \App\Models\User::factory(10)->create();

@@ -40,11 +40,18 @@ Route::middleware(['auth', 'user-access:freelancer'])->group(function(){
     Route::get('freelancer/home',[HomeController::class, 'freelancerHome'])->name('freelancer.home'); 
 });
 // Route::get('jobs/apply', 'JobsController@apply')->name('jobs.apply');
+Route::get('customer/hireFreelancer', [CustomerController::class, 'hireFreelancer'])->name('customer.hireFreelancer');
+Route::post('freelancer/createSkills', [FreelancerController::class, 'createSkills'])->name('freelancer.createSkills');
 Route::resource('customer', CustomerController::class);
 Route::resource('freelancer', FreelancerController::class);
 Route::resource('jobs', JobsController::class);
 Route::get('customer/show_customer_request/{job_id}', [CustomerController::class, 'show_customer_request'])->name('customer.show_customer_request');
-Route::get('jobs/approve/{job_id}', [JobsController::class, 'approve'])->name('jobs.approve');
-Route::get('jobs/rate/{job_id}', [JobsController::class, 'rate'])->name('jobs.rate');
+Route::get('jobs/approve/{job_id}/{freelancer_id}', [JobsController::class, 'approve'])->name('jobs.approve');
+Route::get('jobs/rate/{job_id}/{freelancer_id}', [JobsController::class, 'rate'])->name('jobs.rate');
 Route::get('jobs/releaseProject/{job_id}', [JobsController::class, 'releaseProject'])->name('jobs.releaseProject');
 Route::post('jobs/newJob', [JobsController::class, 'newJob'])->name('jobs.newJob');
+Route::post('jobs/rateJob', [JobsController::class, 'rateJob'])->name('jobs.rateJob');
+
+
+
+

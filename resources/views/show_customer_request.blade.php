@@ -10,9 +10,13 @@
                 @if($jobRequests)
                     @foreach($jobRequests as $jobRequest)
                     <div style="">
-                        <p>Work name -</p>
-                        <p>Freelancer name -</p>
-                        <a href="{{route('jobs.approve', [ $jobRequest['job_id'] ])}}">Aprove</a>
+                        <p>Work name - {{$jobRequest->job['work_name']}}</p>
+                        <p>Freelancer id - {{$jobRequest->freelancer['freelancer_id']}}, </p>
+                        @if($jobRequest->freelancer['hourly_pay'])    
+                        <p>Freelancer hourly pay - {{$jobRequest->freelancer['hourly_pay']}}$</p>
+                        @endif
+                   
+                        <a href="{{route('jobs.approve', [ $jobRequest->job['id'], $jobRequest->freelancer['freelancer_id'] ])}}">Aprove</a>
                     </div>
                     @endforeach
                 @endif

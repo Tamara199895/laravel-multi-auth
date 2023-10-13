@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Jobs;
+use App\Models\Skills;
 use App\Models\Customer;
 use App\Models\Freelancer;
 use Illuminate\Http\Request;
@@ -46,9 +47,15 @@ class CustomerController extends Controller
 
     public function show_customer_request($job_id)
     {   
-        $jobRequests = Customer_Freelancer::where('job_id', $job_id)->get();
-        dd($jobRequests);
+        $jobRequests = Customer_Freelancer::where('job_id', $job_id)->with('job','freelancer')->get();
         return view('show_customer_request')->with('jobRequests',$jobRequests);
+    }
+
+    public function hireFreelancer(){
+        $skills = Skills::all();
+        dd($skills);
+        return view('hire_freelancer')->with('skills',$skills);
+
     }
 
     /**

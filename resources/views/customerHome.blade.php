@@ -10,6 +10,8 @@
                  
                   <ul class="nav navbar-nav">
                     <li><a href="{{ route('customer.show', auth()->user()->id)}}">See My Work </a></li>
+                    <li><a  href="{{ route('customer.hireFreelancer')}}">Hire Freelancer </a></li>
+
                 </ul>
                  </div>
             </div>

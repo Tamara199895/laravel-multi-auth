@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\RateStoreRequest;
 use App\Models\Jobs;
+use App\Models\User;
 use App\Models\Skills;
 use App\Models\Customer;
 use App\Models\Freelancer;
@@ -37,7 +39,7 @@ class JobsController extends Controller
 
     public function newJob(JobStoreRequest $request)
     {
-        $validated= $request->validated();
+        $validated = $request->validated();
       
         $job = Jobs::create([
             'customer_id'=> $request->customer_id,
@@ -60,7 +62,6 @@ class JobsController extends Controller
     {
         $skills = Skills::all();
         return view('jobs.create')->with(['skills' => $skills]);
-
         // $validated = $request->validated();        
         // $user =  Jobs::create($request);
     }
@@ -89,7 +90,8 @@ class JobsController extends Controller
     public function show(string $id)
     {
         $job = $this->JobsRepository->find($id);
-        return view('jobs.show')->with('job', $job);
+        $freelancer = User::where('id', $job->freelancer_id)->first();
+        return view('jobs.show')->with(['job' => $job, 'freelancer' => $freelancer]);
     }
 
     /**
@@ -100,10 +102,25 @@ class JobsController extends Controller
         //   
     }
 
-    public function rate($job_id, $customer_id, $freelancer_id)
+    public function rate($job_id, $freelancer_id)
     {
-        return view('jobs.rate')->with(['job_id' => $job_id, 'customer_id' => $customer_id, 'freelancer_id' => $freelancer_id]);
+        return view('jobs.rate')->with(['job_id' => $job_id, 'customer_id' => auth()->user()->id, 'freelancer_id' => $freelancer_id]);
     }
+
+    public function rateJob(RateStoreRequest $request){
+        $validated = $request->validated();
+        $job = Jobs::find($request->job_id);
+        $freelancer = User::where('id', $request->freelancer_id)->first();
+        $job->update(
+            [
+                'rate_description' => $request->rate_description,
+                'rate' => $request->rate,
+            ]
+            );
+            
+            return view('jobs.show')->with(['job' => $job, 'freelancer' => $freelancer]);
+    }
+
 
     public function releaseProject($id)
     {
@@ -115,7 +132,7 @@ class JobsController extends Controller
         return redirect()->back();
     }
 
-    public function approve($job_id, $customer_id, $freelancer_id)
+    public function approve($job_id, $freelancer_id)
     {
         Jobs::where('id', $job_id)
             ->update(
@@ -125,8 +142,8 @@ class JobsController extends Controller
                 ]
             );
         Customer_Freelancer::where('job_id', $job_id)->delete();
-        // dd($requests);
-        $job = $this->JobsRepository->find($customer_id);
+        $job = $this->JobsRepository->find($job_id);
+
         return view('jobs.show')->with('job', $job);
     }
 

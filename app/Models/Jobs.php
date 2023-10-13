@@ -17,7 +17,8 @@ class Jobs extends Model
         'work_name',
         'work_description',
         'status',
-        'rate'
+        'rate',
+        'rate_description'
     ];
 
     public function customer()
@@ -25,7 +26,7 @@ class Jobs extends Model
         return $this->belongsTo(Customer::class);
     }
     public function skills() {
-        return $this->belongsToMany(Skills::class, 'job_skills', 'skill_id', 'job_id');
+        return $this->belongsToMany(Jobs::class, 'job_skills', 'job_id', 'skill_id');
 
 
     }    

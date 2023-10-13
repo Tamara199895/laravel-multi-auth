@@ -14,6 +14,8 @@ class JobsSeeder extends Seeder
      */
     public function run(): void
     {
-        Jobs::factory()->has(Skills::factory())->count(5)->create();  
+        Jobs::factory(5)->create()->each(function($job){
+            $job->skills()->attach(Skills::inRandomOrder()->limit(3)->get());
+        });
     }
 }
