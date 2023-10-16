@@ -25,7 +25,7 @@ class FreelancerController extends Controller
     public function create()
     {
         $skills = Skills::all();
-        return view('freelancer_skills')->with('skills', $skills);
+        return view('freelancer_skills')->with('skills',$skills);
 
     }
 
@@ -35,25 +35,21 @@ class FreelancerController extends Controller
     public function createSkills(FreelancerSkilleRequest $request)
     {
         $validated = $request->validated();
-        dd($validated);
-
-        if ($request->skills) {
-
-            foreach ($request->skills as $skill_id) {
-                if (!(Skills_Freelancer::where(['freelancer_id' => auth()->user()->id, 'skill_id' => $skill_id]))->first()) {
-                    Skills_Freelancer::create([
-                        'freelancer_id' => auth()->user()->id,
-                        'skill_id' => $skill_id
-                    ]);
-                }
+            
+            foreach($validated['skill_id'] as $skill_id){
+            if(!(Skills_Freelancer::where(['freelancer_id' => auth()->user()->id,'skill_id' =>$skill_id ]))->first()){
+                Skills_Freelancer::create([
+                    'freelancer_id' => auth()->user()->id,
+                    'skill_id' =>$skill_id
+                ]);
             }
             return redirect()->back()->with('success', 'Skills successfully added.');
-        }
+            }
     }
 
     public function store(Request $request)
     {
-
+        
     }
 
     /**
@@ -61,8 +57,8 @@ class FreelancerController extends Controller
      */
     public function show($id)
     {
-        $jobs = Jobs::where('freelancer_id', $id)->get();
-        return view('freelancer_jobs')->with('jobs', $jobs);
+        $jobs = Jobs::where('freelancer_id',$id)->get();
+        return view('freelancer_jobs')->with('jobs',$jobs);
     }
 
     /**

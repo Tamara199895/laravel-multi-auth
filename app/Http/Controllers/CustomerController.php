@@ -33,7 +33,7 @@ class CustomerController extends Controller
      */
     public function store(Request $request)
     {
-        //
+            //
     }
 
     /**
@@ -53,8 +53,22 @@ class CustomerController extends Controller
 
     public function hireFreelancer(){
         $skills = Skills::all();
-        dd($skills);
-        return view('hire_freelancer')->with('skills',$skills);
+        $freelancers =Freelancer::with('user', 'skills_freelancer')->get();
+        // dd($freelancers);
+        return view('hire_freelancer')->with(['skills'=>$skills, 'freelancers'=>$freelancers]);
+
+    }
+
+    public function filter(Request $request)
+    {
+        $skills = Skills::all();
+        $freelancers = [];
+        $input_skill = $request->input('skill');
+        $freelancers = Freelancer::whereHas('skills_freelancer', function($query) use ($input_skill) {
+            $query->whereIn('skill_id', $input_skill);
+        })->get();
+        // dd($freelancers);
+        return view('hire_freelancer')->with(['skills'=>$skills, 'freelancers'=>$freelancers]);
 
     }
 

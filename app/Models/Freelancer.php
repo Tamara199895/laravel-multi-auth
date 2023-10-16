@@ -18,10 +18,15 @@ class Freelancer extends Model
 
     public function user()
     {
-        return $this->belongsTo(User::class);
+        return $this->belongsTo(User::class, 'freelancer_id', 'id');
     }
     public function job()
     {
         return $this->hasMany(Jobs::class);
     }
+    public function skills_freelancer() {
+
+        return $this->hasMany(SKills_Freelancer::class,$foreignKey = 'freelancer_id',$localKey = 'freelancer_id');
+
+    }  
 }

@@ -41,6 +41,8 @@ Route::middleware(['auth', 'user-access:freelancer'])->group(function(){
 });
 // Route::get('jobs/apply', 'JobsController@apply')->name('jobs.apply');
 Route::get('customer/hireFreelancer', [CustomerController::class, 'hireFreelancer'])->name('customer.hireFreelancer');
+Route::post('customer/filter', [CustomerController::class, 'filter'])->name('customer.filter');
+
 Route::post('freelancer/createSkills', [FreelancerController::class, 'createSkills'])->name('freelancer.createSkills');
 Route::resource('customer', CustomerController::class);
 Route::resource('freelancer', FreelancerController::class);
