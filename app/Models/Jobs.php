@@ -27,7 +27,10 @@ class Jobs extends Model
     }
     public function skills() {
         return $this->belongsToMany(Jobs::class, 'job_skills', 'job_id', 'skill_id');
-
-
     }    
+    public function job_skills() {
+
+        return $this->hasMany(Job_SKills::class,$foreignKey = 'job_id',$localKey = 'id');
+
+    }  
 }

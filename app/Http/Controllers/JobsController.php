@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\RateStoreRequest;
 use App\Models\Jobs;
 use App\Models\User;
 use App\Models\Skills;
+use App\Models\Message;
 use App\Models\Customer;
 use App\Models\Freelancer;
 use App\Models\Job_Skills;
@@ -14,7 +14,9 @@ use App\Repository\JobsRepository;
 use App\Models\Customer_Freelancer;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\View;
+use App\Http\Requests\MessageRequest;
 use App\Http\Requests\JobStoreRequest;
+use App\Http\Requests\RateStoreRequest;
 use Illuminate\Support\Facades\Validator;
 use App\Interfaces\JobsRepositoryInterface;
 
@@ -62,8 +64,6 @@ class JobsController extends Controller
     {
         $skills = Skills::all();
         return view('jobs.create')->with(['skills' => $skills]);
-        // $validated = $request->validated();        
-        // $user =  Jobs::create($request);
     }
 
     /**
@@ -147,7 +147,25 @@ class JobsController extends Controller
         return view('jobs.show')->with('job', $job);
     }
 
+    public function customer_chat($job_id,$freelancer_id){
+        return view('jobs.chat')->with(['job_id'=>$job_id, 'customer_id'=>auth()->user()->id,'freelancer_id'=>$freelancer_id]);
+    }
+    public function freelancer_chat($job_id,$customer_id){
+        return view('jobs.chat')->with(['job_id'=>$job_id, 'customer_id'=>$customer_id,'freelancer_id'=>auth()->user()->id]);
+    }
 
+    public function send_message(MessageRequest $request){
+        $validated = $request->validated();
+    //   dd($request);
+        $message = Message::create([
+            'customer_id'=> $request->customer_id,
+            'freelancer_id' => $request->freelancer_id,
+            'job_id' => $request->job_id,
+            'message' => $request->message
+        ]);
+        return redirect()->back();
+
+    }
     /**
      * Update the specified resource in storage.
      */

@@ -43,7 +43,11 @@
         </tr>
         </tbody>
         @endif
-        </table> </div> </div>
+        </table> </div>
+       </div>
+         @if($job->freelancer_id)
+        <a href="{{route('jobs.customer_chat', [$job->id,$job->freelancer_id])}}">Message to freelancer</a>
+        @endif
         </div>
         </div>
 </div> @endsection

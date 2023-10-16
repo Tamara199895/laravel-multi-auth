@@ -13,6 +13,7 @@
                   You are a Freelancer -{{auth()->user()->name}}
                   <li><a href="{{ route('jobs.index') }}">View All Jobs</a></li>
                   <li><a href="{{ route('freelancer.show', auth()->user()->id)}}">See My Jobs </a></li>
+                  <li><a href="{{ route('freelancer.searchWithSkills')}}">Seatch job with skills</a></li>
                  </div>
             </div>
         </div>

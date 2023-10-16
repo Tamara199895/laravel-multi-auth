@@ -1,8 +1,8 @@
 @extends('layouts.app')
 @section('content')
 <div class="container">
-    <div class="sidebar-widget"> <h3>Search Freelancer basec on skills</h3> <div class="tags-container">
-    <form action="{{ route('customer.filter') }}" enctype="multipart/form-data">
+    <div class="sidebar-widget"> <h3>Search Jobs depending on skills</h3> <div class="tags-container">
+    <form action="{{ route('freelancer.filter') }}" enctype="multipart/form-data">
     @csrf
       @foreach ($skills as $skill )
       <div class="tag">
@@ -13,24 +13,24 @@
       </div>
       <div class="clearfix"></div>
       <button type="submit" class="btn btn-success btn-sm">Filter</button>
-      <a class="btn btn-danger btn-sm" href="hireFreelancer">Delete Filter</a>
+      <a class="btn btn-danger btn-sm" href="searchWithSkills">Delete Filter</a>
       </form>
     </div>
 
     <div class="col-md-9 mt-3">
                 <div class="card ">
                     <div>
-                            @if(!empty($freelancers))
-                                @foreach($freelancers as $freelancer)
+                            @if(!empty($jobs))
+                                @foreach($jobs as $job)
                                                 <div class="col-md-4 mt-3">
                                                     <div class="border p-2">
-                                                        <h6>{{ $freelancer->user->name }}</h6>
+                                                        <h6>Job name - {{ $job->work_name }}</h6>
                                                     </div>
                                                 </div>
                                   @endforeach
                                 
                             @else
-                                    <p> No one Found</p>
+                                    <p> No Job Found</p>
                      
                     </div>
                     @endif

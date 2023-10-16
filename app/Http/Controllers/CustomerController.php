@@ -67,7 +67,6 @@ class CustomerController extends Controller
         $freelancers = Freelancer::whereHas('skills_freelancer', function($query) use ($input_skill) {
             $query->whereIn('skill_id', $input_skill);
         })->get();
-        // dd($freelancers);
         return view('hire_freelancer')->with(['skills'=>$skills, 'freelancers'=>$freelancers]);
 
     }

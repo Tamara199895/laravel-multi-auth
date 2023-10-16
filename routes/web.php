@@ -41,7 +41,9 @@ Route::middleware(['auth', 'user-access:freelancer'])->group(function(){
 });
 // Route::get('jobs/apply', 'JobsController@apply')->name('jobs.apply');
 Route::get('customer/hireFreelancer', [CustomerController::class, 'hireFreelancer'])->name('customer.hireFreelancer');
-Route::post('customer/filter', [CustomerController::class, 'filter'])->name('customer.filter');
+Route::get('customer/filter', [CustomerController::class, 'filter'])->name('customer.filter');
+Route::get('freelancer/searchWithSkills', [FreelancerController::class, 'searchWithSkills'])->name('freelancer.searchWithSkills');
+Route::get('freelancer/filter', [FreelancerController::class, 'filter'])->name('freelancer.filter');
 
 Route::post('freelancer/createSkills', [FreelancerController::class, 'createSkills'])->name('freelancer.createSkills');
 Route::resource('customer', CustomerController::class);
@@ -53,6 +55,11 @@ Route::get('jobs/rate/{job_id}/{freelancer_id}', [JobsController::class, 'rate']
 Route::get('jobs/releaseProject/{job_id}', [JobsController::class, 'releaseProject'])->name('jobs.releaseProject');
 Route::post('jobs/newJob', [JobsController::class, 'newJob'])->name('jobs.newJob');
 Route::post('jobs/rateJob', [JobsController::class, 'rateJob'])->name('jobs.rateJob');
+Route::get('jobs/customer_chat/{job_id}/{freelancer_id}', [JobsController::class, 'customer_chat'])->name('jobs.customer_chat');
+Route::get('jobs/freelancer_chat/{job_id}/{customer_id}', [JobsController::class, 'freelancer_chat'])->name('jobs.freelancer_chat');
+Route::post('jobs/send_message', [JobsController::class, 'send_message'])->name('jobs.send_message');
+
+
 
 
 

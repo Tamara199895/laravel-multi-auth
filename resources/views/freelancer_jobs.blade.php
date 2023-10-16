@@ -17,7 +17,7 @@
                   <tbody>
                 @foreach($jobs as $job)
                 <tr>
-                <td style="padding-left:20px">{{ $job->work_name }}</td>
+                <td style="padding-left:20px"><a href="{{route('jobs.freelancer_chat', [$job->id,$job->customer_id])}}">{{ $job->work_name }}</a></td>
                 <td style="padding-left:20px">{{ $job->work_description }}</td>
                 <td style="padding-left:20px">
                 {{ $job->status }} 

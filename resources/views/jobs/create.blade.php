@@ -9,7 +9,13 @@
     </nav>
     <h4>Add Job Post</h4>
     
-    @if(session()->has('success'))
+    <div class="alert alert-danger">{{ $message }}</div>
+            @enderror
+            <label>Job description </label>
+            <input type="text" name="work_description" value='{{old("text")}}' class="form-control" placeholder="Job description">
+            </div>
+            <input type="hidden" name="customer_id" value="{{auth()->user()->id}}">
+            <input @if(session()->has('success'))
         <label class="alert alert-success w-100">{{session('success')}}</label>
     @endif
     @if(session()->has('error'))
@@ -27,13 +33,7 @@
             </div>
             <div class="form-group">
             @error('work_description')
-                <div class="alert alert-danger">{{ $message }}</div>
-            @enderror
-            <label>Job description </label>
-            <input type="text" name="work_description" value='{{old("text")}}' class="form-control" placeholder="Job description">
-            </div>
-            <input type="hidden" name="customer_id" value="{{auth()->user()->id}}">
-            <input type="hidden" name="status" value="not_started">
+                type="hidden" name="status" value="not_started">
             <div class="form-group">
 
             <div>

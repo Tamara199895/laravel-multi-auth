@@ -7,6 +7,7 @@ use App\Models\Skills;
 use App\Models\Freelancer;
 use Illuminate\Http\Request;
 use App\Models\Skills_Freelancer;
+use App\Repository\JobsRepository;
 use App\Http\Requests\FreelancerSkilleRequest;
 
 class FreelancerController extends Controller
@@ -47,6 +48,25 @@ class FreelancerController extends Controller
             }
     }
 
+
+    public function searchWithSkills()
+    {
+        $jobs = Jobs::with('skills')->get();
+        $skills = Skills::all();
+        return view('search_with_skills')->with(['jobs'=> $jobs, 'skills'=>$skills]);
+    }
+
+    public function filter(Request $request)
+    {
+        $skills = Skills::all();
+        $jobs = [];
+        $input_skill = $request->input('skill');
+        $jobs = Jobs::whereHas('job_skills', function($query) use ($input_skill) {
+            $query->whereIn('skill_id', $input_skill);
+        })->get();
+        return view('search_with_skills')->with(['skills'=>$skills, 'jobs'=>$jobs]);
+
+    }
     public function store(Request $request)
     {
         
