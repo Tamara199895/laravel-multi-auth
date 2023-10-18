@@ -44,6 +44,7 @@ Route::get('customer/hireFreelancer', [CustomerController::class, 'hireFreelance
 Route::get('customer/filter', [CustomerController::class, 'filter'])->name('customer.filter');
 Route::get('freelancer/searchWithSkills', [FreelancerController::class, 'searchWithSkills'])->name('freelancer.searchWithSkills');
 Route::get('freelancer/filter', [FreelancerController::class, 'filter'])->name('freelancer.filter');
+Route::get('customer/hire/{freelancer_id}', [CustomerController::class, 'hire'])->name('customer.hire');
 
 Route::post('freelancer/createSkills', [FreelancerController::class, 'createSkills'])->name('freelancer.createSkills');
 Route::resource('customer', CustomerController::class);

@@ -18,7 +18,7 @@
       <td> {{ $job->work_name }}</td>
       <td> {{$job->work_description }}</td>
       <td>
-        @if($job->freelancer_id)
+        @if($freelancer)
         {{$freelancer->name}}
         @endif
         @if(!$job->freelancer_id)

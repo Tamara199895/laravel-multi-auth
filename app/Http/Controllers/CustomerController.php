@@ -2,11 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\HireFreelancerRequest;
 use App\Models\Jobs;
 use App\Models\Skills;
 use App\Models\Customer;
 use App\Models\Freelancer;
 use Illuminate\Http\Request;
+use App\Models\Hired_Freelancer;
 use App\Models\Customer_Freelancer;
 use App\Http\Controllers\Controller;
 
@@ -51,23 +53,45 @@ class CustomerController extends Controller
         return view('show_customer_request')->with('jobRequests',$jobRequests);
     }
 
-    public function hireFreelancer(){
+    public function hireFreelancer(Request $request){
         $skills = Skills::all();
-        $freelancers =Freelancer::with('user', 'skills_freelancer')->get();
-        // dd($freelancers);
+        if($request['_token'] !=null){
+        $validated = $request->validate(['skill' => 'required']);
+        $skills = Skills::all();
+        $freelancers = [];
+        $input_skill = $request->input('skill');
+        $min_price= $request->min_price ? $request->min_price : 0;
+        $max_price= $request->max_price ? (int)$request->max_price  : 100;
+        $sorting = $request->sorting ? $request->sorting : 'asc';
+        $freelancers = Freelancer::whereHas('skills_freelancer', function($query) use ($input_skill) {
+          $query->whereIn('skill_id', $input_skill);
+        })->where('hourly_pay','<=',$max_price)->where('hourly_pay','>=',$min_price)->orderBy('hourly_pay', $sorting)->paginate(3);
+        }
+        else{
+            $freelancers =Freelancer::with('user', 'skills_freelancer')->paginate(3);
+        }
         return view('hire_freelancer')->with(['skills'=>$skills, 'freelancers'=>$freelancers]);
 
     }
 
-    public function filter(Request $request)
+    public function hire($freelancer_id){
+        if(!(Hired_Freelancer::where(['customer_id' => auth()->user()->id,'freelancer_id' =>$freelancer_id ]))->first()){
+            Hired_Freelancer::create([
+                'freelancer_id' => $freelancer_id,
+                'customer_id' =>auth()->user()->id
+            ]);
+            return redirect()->back()->with('success', 'Frilancer Hired.');
+        }else{
+            return redirect()->back()->with('error', 'Already Hired Freelancer.');
+        }
+        
+
+    }
+    
+
+    public function filter(HireFreelancerRequest $request)
     {
-        $skills = Skills::all();
-        $freelancers = [];
-        $input_skill = $request->input('skill');
-        $freelancers = Freelancer::whereHas('skills_freelancer', function($query) use ($input_skill) {
-            $query->whereIn('skill_id', $input_skill);
-        })->get();
-        return view('hire_freelancer')->with(['skills'=>$skills, 'freelancers'=>$freelancers]);
+      
 
     }
 

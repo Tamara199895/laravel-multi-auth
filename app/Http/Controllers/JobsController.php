@@ -143,8 +143,9 @@ class JobsController extends Controller
             );
         Customer_Freelancer::where('job_id', $job_id)->delete();
         $job = $this->JobsRepository->find($job_id);
-
-        return view('jobs.show')->with('job', $job);
+        $freelancer = User::where('id', $job->freelancer_id)->first();
+        return view('jobs.show')->with(['job'=> $job, 'freelancer'=>$freelancer]);
+        
     }
 
     public function customer_chat($job_id,$freelancer_id){
